@@ -4,9 +4,35 @@ import { useAPI } from "../utils/api-connection";
 import { Artist } from "../typings/Artist";
 import { Genre } from "../typings/Genre";
 
+type SearchByAnythingResponse = {
+  artists: Array<Artist>;
+  genres: Array<Genre>;
+};
+
 const useArtistService = () => {
   const { state, updateState } = useContext(ArtistSearchStateContext);
-  const { getArtist, searchArtistsByGenre, searchGenresByName } = useAPI();
+  const {
+    getArtist,
+    getRelated,
+    searchArtistsByGenre,
+    searchGenresByName,
+    searchArtistsByName,
+  } = useAPI();
+
+  const searchArtistsByAnything = (
+    q: string,
+    callback: (response: SearchByAnythingResponse) => void
+  ) => {
+    searchGenres(q, (genres) => {
+      if (genres.length > 0) {
+        callback({ genres, artists: [] });
+      } else {
+        getArtistByName(q, (artists) => {
+          callback({ genres: [], artists });
+        });
+      }
+    });
+  };
 
   const getArtistByGenre = (id: number, callback: (a: Artist[]) => void) => {
     searchArtistsByGenre(id)
@@ -16,11 +42,26 @@ const useArtistService = () => {
       .catch((e) => console.log(e));
   };
 
+  const getArtistByName = (q: string, callback: (a: Artist[]) => void) => {
+    searchArtistsByName(q)
+      .then((artists) => {
+        callback(artists);
+      })
+      .catch((e) => console.log(e));
+  };
+
   const getById = (id: string, callback: (a: Artist) => void) => {
     getArtist(id)
-      .then((artist) => {
-        callback(artist);
-      })
+      .then((artist) => callback(artist[0]))
+      .catch((e) => console.log(e));
+  };
+
+  const getRelatedArtists = (
+    id: string,
+    callback: (list: Artist[]) => void
+  ) => {
+    getRelated(id)
+      .then((list) => callback(list))
       .catch((e) => console.log(e));
   };
 
@@ -43,12 +84,19 @@ const useArtistService = () => {
     });
   };
 
+  const isArtistInFavorites = (artist: Artist) =>
+    state.favorites.findIndex((a) => a.id === artist.id) !== -1;
+
   return {
     getById,
-    getArtistByGenre,
-    addArtistToFavorites,
-    removeArtistFromFavorites,
     searchGenres,
+    getArtistByName,
+    getArtistByGenre,
+    getRelatedArtists,
+    isArtistInFavorites,
+    addArtistToFavorites,
+    searchArtistsByAnything,
+    removeArtistFromFavorites,
   };
 };
 

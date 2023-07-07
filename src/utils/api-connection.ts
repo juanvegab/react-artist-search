@@ -27,14 +27,31 @@ export const useAPI = () => {
     return api<Array<Artist>>(queryURL, { ...GET_OPTIONS });
   };
 
+  const searchArtistsByName = (q: string) => {
+    const queryURL = ENDPOINTS.ARTISTS + `?q=${q}`;
+    return api<Array<Artist>>(queryURL, { ...GET_OPTIONS });
+  };
+
   const getArtist = (id: string) => {
-    return api<Artist>(ENDPOINTS.ARTISTS + `/${id}`, { ...GET_OPTIONS });
+    return api<Array<Artist>>(ENDPOINTS.ARTISTS + `/${id}`, { ...GET_OPTIONS });
+  };
+
+  const getRelated = (id: string) => {
+    return api<Array<Artist>>(ENDPOINTS.ARTISTS + `/${id}/similar`, {
+      ...GET_OPTIONS,
+    });
   };
 
   const searchGenresByName = (query: string) => {
-    const queryURL = ENDPOINTS.GENRES + `?q=${query}&limit=10`;
+    const queryURL = ENDPOINTS.GENRES + `?q=${query}`;
     return api<Array<Genre>>(queryURL, { ...GET_OPTIONS });
   };
 
-  return { searchArtistsByGenre, getArtist, searchGenresByName };
+  return {
+    getArtist,
+    getRelated,
+    searchGenresByName,
+    searchArtistsByName,
+    searchArtistsByGenre,
+  };
 };
