@@ -8,9 +8,10 @@ body {
 main {
 	display: block;
 }
-h1 {
+h1, h2, h3, h4, h5 {
 	font-size: 2em;
-	margin: 0.67em 0;
+	margin: 0;
+	font-weight: 500;
 }
 hr {
 	box-sizing: content-box;

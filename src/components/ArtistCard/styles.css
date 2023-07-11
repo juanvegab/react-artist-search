@@ -1,67 +1,112 @@
 .artist-card {
-  border: 1px solid black;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   text-align: left;
-  margin-bottom: 10px;
-  padding: 10px;
+  margin-bottom: 1.5em;
+  padding: 0.75em;
+  background-color: var(--tertiary-color);
 }
 
 .artist-card .info {
-  width: calc(100% * 0.8);
-}
-
-.artist-card .basic {
-  display: flex;
-}
-
-.artist-card .title {
-  padding-left: 10px;
-  flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.artist-card h2,
+.artist-card .title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5em;
+}
+
+.artist-card h2 {
+  font-size: 2em;
+  font-weight: 500;
+  margin: 0 0 0.5em;
+}
+
 .artist-card p {
-  margin: 0;
+  font-size: 1em;
+  font-weight: 500;
+  margin: 0 0 0.5em;
+}
+
+.artist-card p span {
+  font-weight: 100;
 }
 
 .artist-card .thumnail {
   display: block;
-  width: 200px;
-  height: 150px;
+  width: 100%;
+  height: 200px;
   object-fit: cover;
   object-position: center center;
   border-radius: 10px;
 }
 
 .artist-card .actions {
-  width: calc(100% * 0.2);
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-end;
-  margin-bottom: 20px;
 }
 
 .artist-card.simple {
-  text-align: center;
-}
-
-.artist-card.simple .thumnail {
-  width: 100px;
-  height: 75px;
+  text-align: left;
 }
 
 .artist-card.simple .title {
-  justify-content: space-evenly;
+  flex-direction: column;
 }
 
-.artist-card.simple .actions {
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0;
+.artist-card.simple h2 {
+  font-size: 1.5em;
+}
+
+.artist-card.simple h2,
+.artist-card.simple p {
+  margin-right: 2em;
+}
+
+@media screen and (min-width: 834px) {
+  .artist-card {
+    flex-direction: row;
+    margin-bottom: 1.5em;
+    padding: 1em 2em;
+  }  
+  
+  .artist-card .thumnail {
+    display: block;
+    width: 283px;
+    height: 200px;
+  }
+
+  .artist-card.simple .thumnail {
+    width: 169px;
+    height: 120px;
+  }
+
+  .artist-card.simple .title {
+    align-items: center;
+    flex-direction: row;
+  }
+  
+  .artist-card .title {
+    padding-left: 2em;
+    margin-top: 0;
+  }
+
+  .artist-card .info {
+    width: calc(100% * 0.8);
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .artist-card .actions {
+    width: calc(100% * 0.2);
+  }
 }

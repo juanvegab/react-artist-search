@@ -1,0 +1,28 @@
+.btn {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: var(--secondary-color);
+  font-size: 1em;
+  height: 40px;
+  min-width: 100px;
+  padding: 0 12px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn.btn-primary {
+  background-color: var(--primary-color);
+}
+
+.btn.btn-secondary {
+  background-color: var(--quaternary-color);
+}
+
+.btn.btn-link {
+  background-color: transparent;
+  color: var(--copy-color);
+  text-decoration: underline;
+}

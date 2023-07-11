@@ -1,8 +1,8 @@
 import { FC } from "react";
-// import { useArtistCard } from "./useArtistCard";
 import { Artist } from "../../typings/Artist";
 import { Link } from "react-router-dom";
 import "./styles.css";
+import { Button } from "../Button";
 
 interface ArtistProps {
   artist: Artist;
@@ -19,49 +19,57 @@ const ArtistCard: FC<ArtistProps> = ({
   addToFavorite,
   removeFromFavorite,
 }) => {
-  // const {} = useArtistCard();
   const { id, name, image, genres, popularity } = artist;
   const primaryGenre = genres && genres.find((g) => g.is_primary);
-  const cardStyleAndVersion = `artist-card ${simple && "simple"}`;
+  const cardStyleAndVersion = `artist-card ${simple ? "simple" : ""}`;
 
   return (
     <div className={cardStyleAndVersion}>
       <div className="info">
-        <div className="basic">
+        <Link to={`/artist/${id}`}>
+          <img className="thumnail" src={image} alt={name} />
+        </Link>
+        <div className="title">
           <Link to={`/artist/${id}`}>
-            <img className="thumnail" src={image} alt={name} />
-          </Link>
-          <div className="title">
             <h2>{name}</h2>
-            {primaryGenre && (
-              <p>
-                {!simple && "Primary genre:"} {primaryGenre.name}
-              </p>
-            )}
-            {!simple && popularity && <p>Popularity score: {popularity}</p>}
-          </div>
+          </Link>
+          {primaryGenre && (
+            <p>
+              {!simple && "Primary genre: "}
+              <span>{primaryGenre.name}</span>
+            </p>
+          )}
+          {!simple && (
+            <div className="detail">
+              {genres && (
+                <p>
+                  Additional Genres:{" "}
+                  <span>{genres.map((g) => g.name).join(", ")}</span>
+                </p>
+              )}
+              {popularity && (
+                <p>
+                  Popularity score: <span>{popularity}</span>
+                </p>
+              )}
+            </div>
+          )}
         </div>
-        {!simple && (
-          <div className="detail">
-            {genres && (
-              <div>
-                <p>Additional Genres:</p>
-                <div>
-                  {genres.map((g) => (
-                    <span key={g.id}>{g.name}</span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
       </div>
       <div className="actions">
         {removeFromFavorite && isFavorite && (
-          <div onClick={() => removeFromFavorite(artist)}>REMOVE</div>
+          <Button
+            type="primary"
+            label="Remove"
+            action={() => removeFromFavorite(artist)}
+          />
         )}
         {addToFavorite && !isFavorite && (
-          <div onClick={() => addToFavorite(artist)}>ADD</div>
+          <Button
+            type="secondary"
+            label="Add to list"
+            action={() => addToFavorite(artist)}
+          />
         )}
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useArtistService } from "../../services/useArtistsService";
 import { Artist } from "../../typings/Artist";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const useArtistDetail = () => {
   const {
@@ -16,7 +16,9 @@ const useArtistDetail = () => {
 
   const [relatedArtists, setRelatedArtists] = useState<Array<Artist>>([]);
   const [artist, setArtist] = useState<Artist>();
-  let { id } = useParams();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const goHome = () => navigate("/");
 
   useEffect(() => {
     if (id) {
@@ -28,6 +30,7 @@ const useArtistDetail = () => {
 
   return {
     artist,
+    goHome,
     isArtistInFavorites,
     addFavorite,
     removeFavorite,

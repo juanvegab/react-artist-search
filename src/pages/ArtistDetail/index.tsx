@@ -1,13 +1,14 @@
 import { FC } from "react";
 import { useArtistDetail } from "./useArtistDetail";
 import { ArtistCard } from "../../components/ArtistCard";
-import { Link } from "react-router-dom";
+import { Button } from "../../components/Button";
 
 interface ArtistDetailProps {}
 
 const ArtistDetail: FC<ArtistDetailProps> = () => {
   const {
     artist,
+    goHome,
     addFavorite,
     removeFavorite,
     isArtistInFavorites,
@@ -15,8 +16,10 @@ const ArtistDetail: FC<ArtistDetailProps> = () => {
   } = useArtistDetail();
 
   return (
-    <div>
-      <Link to="/">&lt; Back to Search</Link>
+    <div className="page-layout">
+      <div className="page-nav">
+        <Button type="link" label="&lt; Back to Search" action={goHome} />
+      </div>
       {artist && (
         <ArtistCard
           artist={artist}
@@ -25,6 +28,7 @@ const ArtistDetail: FC<ArtistDetailProps> = () => {
           isFavorite={artist ? isArtistInFavorites(artist) : false}
         />
       )}
+
       <h3>Related Artist:</h3>
       {relatedArtists &&
         relatedArtists.map((a) => (

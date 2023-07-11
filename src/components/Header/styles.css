@@ -1,0 +1,21 @@
+header {
+  padding: 0 1.5em;
+}
+
+header .content {
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .content nav a {
+  color: var(--copy-color);
+  text-decoration: none;
+  font-size: 1em;
+  margin: 0 10px;
+}
+
+header .content nav a:hover {
+  text-decoration: underline;
+}

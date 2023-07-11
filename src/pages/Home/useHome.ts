@@ -4,6 +4,7 @@ import { Genre } from "../../typings/Genre";
 import { Artist } from "../../typings/Artist";
 
 const useHome = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [genre, setGenre] = useState<Genre>();
   const [genres, setGenres] = useState<Array<Genre>>([]);
   const [artists, setArtists] = useState<Array<Artist>>([]);
@@ -25,9 +26,11 @@ const useHome = () => {
   const removeFavorite = (a: Artist) => removeArtistFromFavorites(a.id);
   const search = (q: string) => {
     if (q && q.length > 2) {
+      setIsLoading(true);
       searchArtistsByAnything(q, (r) => {
         setGenres(r.genres);
         setArtists(r.artists);
+        setIsLoading(false);
       });
     }
   };
@@ -36,6 +39,7 @@ const useHome = () => {
   return {
     artists,
     genres,
+    isLoading,
     search,
     selectGenre,
     addFavorite,

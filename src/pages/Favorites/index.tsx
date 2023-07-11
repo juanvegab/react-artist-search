@@ -1,16 +1,18 @@
 import { FC } from "react";
 import { useFavorites } from "./useFavorites";
 import { ArtistCard } from "../../components/ArtistCard";
-import { Link } from "react-router-dom";
+import { Button } from "../../components/Button";
 
 interface FavoritesProps {}
 
 const Favorites: FC<FavoritesProps> = () => {
-  const { removeFavorite, favorites } = useFavorites();
+  const { goHome, removeFavorite, favorites } = useFavorites();
 
   return (
-    <div>
-      <Link to="/">&lt; Back to Search</Link>
+    <div className="page-layout">
+      <div className="page-nav">
+        <Button type="link" label="&lt; Back to Search" action={goHome} />
+      </div>
       <h1>My List</h1>
       {(!favorites || favorites.length === 0) && <p>No Artist in List</p>}
       {favorites &&

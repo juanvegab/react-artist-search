@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { useHome } from "./useHome";
 import { ArtistCard } from "../../components/ArtistCard";
-import { Link } from "react-router-dom";
 import { Typeahead } from "../../components/Typeahead";
 import { Genre } from "../../typings/Genre";
 
@@ -11,23 +10,24 @@ const Home: FC<HomeProps> = () => {
   const {
     genres,
     search,
-    selectGenre,
     artists,
+    isLoading,
+    selectGenre,
     addFavorite,
     removeFavorite,
     isArtistInFavorites,
   } = useHome();
 
   return (
-    <div>
-      <Link to="/my-list">Go to My list</Link>
-      <p>Search by Genre or Artist name as you preffer.</p>
+    <div className="page-layout">
+      <h1 className="text-center">Search by genre or artist</h1>
       <Typeahead
         search={search}
         items={genres}
+        isLoading={isLoading}
         itemClick={(i) => selectGenre(i as Genre)}
       />
-      <h1>Artists</h1>
+
       {artists.map((a) => (
         <ArtistCard
           simple
